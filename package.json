@@ -13,7 +13,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
   "devDependencies": {
     "@eslint/js": "^9.1.1",
     "depcheck": "^1.4.7",
