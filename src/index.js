@@ -9,4 +9,4 @@ dotenv.config();
 
 
 app.use("/", subtitleRoute);
-app.listen(process.env.PORT, () => { console.log(`Server is running on http://localhost:${process.env.PORT}`); });
+app.listen(process.env.PORT, () => { console.log(`Server is running on ${process.env.BASE_URL}:${process.env.PORT}`); });
