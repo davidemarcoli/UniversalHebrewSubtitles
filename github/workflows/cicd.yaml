@@ -1,4 +1,4 @@
-name: StremioWizdomAddon CI/CD
+name: CI/CD
 
 on:
   push:
@@ -12,6 +12,11 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.12.2'
 
       - name: Install Dependencies
         run: npm install
