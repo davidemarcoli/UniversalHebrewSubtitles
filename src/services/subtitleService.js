@@ -9,8 +9,9 @@ import levenshtein from "../utils/levenshtein.js";
 const fetchSubtitlesFromWizdom = async (id, season = 0, episode = 0) => {
   const url = `${wizdomApi.CONTENT_URL}/search?action=by_id&imdb=${id}&season=${season}&episode=${episode}`;
   const response = await superagent.get(url);
-
-  return response.body;
+  const wizdomSubtitles = response.body;
+  
+  return wizdomSubtitles;
 };
 
 const sortSubtitlesByFilename = (subtitles, filename) => {
