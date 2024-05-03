@@ -1,6 +1,6 @@
 const manifestConfig = {
   id: "wizdom.xyz",
-  version: "1.0.0",
+  version: "1.0.1",
 
   catalogs: [],
   resources: ["subtitles"],
