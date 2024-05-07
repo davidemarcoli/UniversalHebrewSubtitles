@@ -1,11 +1,18 @@
 import manifestConfig from "../configs/manifestConfig.js";
 import extractFilename from "../utils/filenameExtractor.js";
 import extractCompoundID from "../utils/compoundIdExtractor.js";
-import { fetchSubtitlesFromWizdom, sortSubtitlesByFilename, mapSubtitlesToStremioFormat, downloadSubtitleZip } from "../services/subtitleService.js";
+import { fetchSubtitlesFromWizdom, sortSubtitlesByFilename, mapSubtitlesToStremioFormat, extractSubtitleFromZipUrl } from "../services/subtitleService.js";
 
 
 const getManifest = (req, res) => {
   res.send(manifestConfig);
+};
+
+const getSubtitle = async (req, res) => {
+  const { subtitleId } = req.params;
+  const srtContent = await extractSubtitleFromZipUrl(subtitleId);
+
+  res.send(srtContent);
 };
 
 const getSubtitles = async (req, res) => {
@@ -24,12 +31,5 @@ const getSubtitles = async (req, res) => {
   }
 };
 
-const getSubtitleZip = async (req, res) => {
-  const { subtitleId } = req.params;
-  const srtContent = await downloadSubtitleZip(subtitleId);
 
-  res.send(srtContent);
-};
-
-
-export { getManifest, getSubtitles, getSubtitleZip };
+export { getManifest, getSubtitle, getSubtitles };

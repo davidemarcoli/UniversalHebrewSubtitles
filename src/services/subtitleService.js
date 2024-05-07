@@ -10,7 +10,7 @@ const fetchSubtitlesFromWizdom = async (id, season = 0, episode = 0) => {
   const url = `${wizdomApi.CONTENT_URL}/search?action=by_id&imdb=${id}&season=${season}&episode=${episode}`;
   const response = await superagent.get(url);
   const wizdomSubtitles = response.body;
-  
+
   return wizdomSubtitles;
 };
 
@@ -31,7 +31,7 @@ const mapSubtitlesToStremioFormat = (subtitles) => {
   }));
 };
 
-const downloadSubtitleZip = async (subtitleId) => {
+const extractSubtitleFromZipUrl = async (subtitleId) => {
   const url = `${wizdomApi.DOWNLOAD_URL}/${subtitleId}`;
   const response = await superagent.get(url).buffer(true);
   const zip = await JSZip.loadAsync(response.body);
@@ -41,4 +41,4 @@ const downloadSubtitleZip = async (subtitleId) => {
 };
 
 
-export { fetchSubtitlesFromWizdom, sortSubtitlesByFilename, mapSubtitlesToStremioFormat, downloadSubtitleZip };
+export { fetchSubtitlesFromWizdom, sortSubtitlesByFilename, mapSubtitlesToStremioFormat, extractSubtitleFromZipUrl };
