@@ -1,13 +1,13 @@
 const manifestConfig = {
-  id: "wizdom.xyz",
-  version: "1.0.1",
+  id: "wizdom",
+  version: "1.0.2",
 
   catalogs: [],
   resources: ["subtitles"],
   types: ["movie", "series"],
 
   name: "Wizdom Subtitles",
-  description: "An unofficial Stremio addon for Hebrew subtitles from wizdom.xyz",
+  description: "A Stremio addon for Hebrew subtitles from Wizdom",
   logo: "https://i.ibb.co/KLYK0TH/wizdon256.png",
 
   contactEmail: "Nitzantomer1998@gmail.com",
