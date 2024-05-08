@@ -1,14 +1,16 @@
 import logger from "../utils/logger.js";
 import manifestConfig from "../configs/manifestConfig.js";
+import subtitleAddonModel from "../models/subtitleAddonModel.js";
 import extractFilename from "../utils/filenameExtractor.js";
 import extractCompoundID from "../utils/compoundIdExtractor.js";
 import { fetchSubtitlesFromWizdom, sortSubtitlesByFilename, mapSubtitlesToStremioFormat, extractSubtitleFromZipUrl } from "../services/subtitleService.js";
 
 
 const getManifest = async (req, res) => {
+  const addon = await subtitleAddonModel.findOneAndUpdate({}, { $inc: { count: 1 } }, { upsert: true, new: true });
 
-  // logger.info(["Install", `[${addon.count}] Addon Installed`]);
-  logger.info(["Install", `Addon Installed`]);
+  logger.info(["Install", `[${addon.count}] Addon Installed`]);
+
   res.send(manifestConfig);
 };
 
