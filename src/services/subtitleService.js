@@ -14,15 +14,6 @@ const fetchSubtitlesFromWizdom = async (id, season, episode) => {
   return wizdomSubtitles;
 };
 
-const sortSubtitlesByFilename = (subtitles, filename) => {
-  return subtitles.sort((a, b) => {
-    const similarityA = levenshtein(a.versioname, filename);
-    const similarityB = levenshtein(b.versioname, filename);
-
-    return similarityA - similarityB;
-  });
-}
-
 const mapSubtitlesToStremioFormat = (subtitles) => {
   return subtitles.map((s) => ({
     url: `${baseConfig.BASE_URL}/${s.id}.srt`,
@@ -30,6 +21,15 @@ const mapSubtitlesToStremioFormat = (subtitles) => {
     lang: "heb",
   }));
 };
+
+const sortSubtitlesByFilename = (subtitles, filename) => {
+  return subtitles.sort((a, b) => {
+    const similarityA = levenshtein(a.id, filename);
+    const similarityB = levenshtein(b.id, filename);
+
+    return similarityA - similarityB;
+  });
+}
 
 const extractSubtitleFromZipUrl = async (subtitleId) => {
   const url = `${wizdomApi.DOWNLOAD_URL}/${subtitleId}`;
@@ -41,4 +41,4 @@ const extractSubtitleFromZipUrl = async (subtitleId) => {
 };
 
 
-export { fetchSubtitlesFromWizdom, sortSubtitlesByFilename, mapSubtitlesToStremioFormat, extractSubtitleFromZipUrl };
+export { fetchSubtitlesFromWizdom, mapSubtitlesToStremioFormat, sortSubtitlesByFilename, extractSubtitleFromZipUrl };
