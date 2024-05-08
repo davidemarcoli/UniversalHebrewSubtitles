@@ -1,12 +1,15 @@
 import logger from "../utils/logger.js";
 import manifestConfig from "../configs/manifestConfig.js";
+import subtitleAddonModel from "../models/subtitleAddonModel.js";
 import extractFilename from "../utils/filenameExtractor.js";
 import extractCompoundID from "../utils/compoundIdExtractor.js";
 import { fetchSubtitlesFromWizdom, sortSubtitlesByFilename, mapSubtitlesToStremioFormat, extractSubtitleFromZipUrl } from "../services/subtitleService.js";
 
 
-const getManifest = (req, res) => {
-  logger.info(["Install", "Manifest Addon"]);
+const getManifest = async (req, res) => {
+  const addon = await subtitleAddonModel.findOneAndUpdate({}, { $inc: { count: 1 } }, { upsert: true, new: true });
+
+  logger.info(["Install", `[${addon.count}] Addon Installed`]);
 
   res.send(manifestConfig);
 };
@@ -29,8 +32,8 @@ const getSubtitlesList = async (req, res) => {
 
   try {
     const wizdomSubtitles = await fetchSubtitlesFromWizdom(id, season, episode);
-    const stremioSubtitles = mapSubtitlesToStremioFormat(sortedSubtitles);
-    const sortedSubtitles = sortSubtitlesByFilename(wizdomSubtitles, filename);
+    const stremioSubtitles = mapSubtitlesToStremioFormat(wizdomSubtitles);
+    const sortedSubtitles = sortSubtitlesByFilename(stremioSubtitles, filename);
 
     res.send({ subtitles: sortedSubtitles });
   } catch (error) {
