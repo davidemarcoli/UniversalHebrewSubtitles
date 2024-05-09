@@ -33,17 +33,12 @@ const getSubtitlesList = async (req, res) => {
 
   if (contentType in ["series", "movie"]) pool.query(watchedContentQuery.insertWatch, [imdbID, season, episode]);
 
-  try {
-    const wizdomSubtitles = await fetchSubtitlesFromWizdom(imdbID, season, episode);
-    const stremioSubtitles = mapSubtitlesToStremioFormat(wizdomSubtitles);
-    const sortedSubtitles = sortSubtitlesByFilename(stremioSubtitles, filename);
+  const wizdomSubtitles = await fetchSubtitlesFromWizdom(imdbID, season, episode);
+  const stremioSubtitles = mapSubtitlesToStremioFormat(wizdomSubtitles);
+  const sortedSubtitles = sortSubtitlesByFilename(stremioSubtitles, filename);
 
-    logger.info(["Watch", `imdbID=${imdbID}, season=${season}, episode=${episode}, filename=${filename}`]);
-    res.send({ subtitles: sortedSubtitles });
-  } catch (error) {
-    logger.info(["Error", error]);
-    res.send({ subtitles: [] });
-  }
+  logger.info(["Watch", `imdbID=${imdbID}, season=${season}, episode=${episode}, filename=${filename}`]);
+  res.send({ subtitles: sortedSubtitles });
 };
 
 
