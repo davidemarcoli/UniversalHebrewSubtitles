@@ -25,6 +25,7 @@
     "jszip": "^3.10.1",
     "moment-timezone": "^0.5.45",
     "mongoose": "^8.3.4",
+    "pg": "^8.11.5",
     "superagent": "^9.0.2",
     "winston": "^3.13.0"
   },
