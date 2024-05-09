@@ -7,7 +7,7 @@ const manifestConfig = {
   types: ["movie", "series"],
 
   name: "Wizdom Subtitles",
-  description: "A Stremio addon for Hebrew subtitles from Wizdom",
+  description: "A Stremio addon for Hebrew subtitles from Wizdom, Developed by Nitzan Tomer",
   logo: "https://i.ibb.co/KLYK0TH/wizdon256.png",
 
   contactEmail: "Nitzantomer1998@gmail.com",
