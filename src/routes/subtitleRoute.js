@@ -6,7 +6,7 @@ import { getManifest, getSubtitleSrt, getSubtitlesList } from "../controllers/su
 
 const router = express.Router();
 router.get("/manifest.json", corsMiddleware, getManifest);
-router.get("/:subtitleId.srt", getSubtitleSrt);
+router.get("/:imdbID/:season/:episode/:subtitleID.srt", getSubtitleSrt);
 router.get("/subtitles/:contentType/:compoundID/:extraArgs.json", corsMiddleware, getSubtitlesList);
 
 
