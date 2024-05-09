@@ -1,21 +1,23 @@
 import logger from "../utils/logger.js";
 import manifestConfig from "../configs/manifestConfig.js";
-import subtitleAddonModel from "../models/subtitleAddonModel.js";
+import subtitleDownloadModel from "../models/subtitleDownloadModel.js";
+import subtitleInstallMondel from "../models/subtitleInstallModel.js";
+import subtitleWatchModel from "../models/subtitleWatchModel.js";
 import extractFilename from "../utils/filenameExtractor.js";
 import extractCompoundID from "../utils/compoundIdExtractor.js";
 import { fetchSubtitlesFromWizdom, sortSubtitlesByFilename, mapSubtitlesToStremioFormat, extractSubtitleFromZipUrl } from "../services/subtitleService.js";
 
 
 const getManifest = async (req, res) => {
-  const addon = await subtitleAddonModel.findOneAndUpdate({}, { $inc: { count: 1 } }, { upsert: true, new: true });
-
-  logger.info(["Install", `[${addon.count}] Addon Installed`]);
+  const subtitleInstallTable = await subtitleInstallMondel.findOneAndUpdate({}, { $inc: { count: 1 } }, { upsert: true, new: true });
+  logger.info(["Install", `[${subtitleInstallTable.count}] Addon Installed`]);
 
   res.send(manifestConfig);
 };
 
 const getSubtitleSrt = async (req, res) => {
-  logger.info(["Download", `subtitleId=${req.params.subtitleId}`]);
+  const subtitleDownloadTable = await subtitleDownloadModel.findOneAndUpdate({}, { $inc: { count: 1 } }, { upsert: true, new: true });
+  logger.info(["Download", `[${subtitleDownloadTable.count}] subtitleId=${req.params.subtitleId}`]);
 
   const { subtitleId } = req.params;
   const srtContent = await extractSubtitleFromZipUrl(subtitleId);
@@ -28,7 +30,8 @@ const getSubtitlesList = async (req, res) => {
   const [id, season = 0, episode = 0] = extractCompoundID(compoundID);
   const filename = extractFilename(extraArgs);
 
-  logger.info(["Watch", `id=${id}, season=${season}, episode=${episode}, filename=${filename}`]);
+  const subtitleWatchTable = await subtitleWatchModel.findOneAndUpdate({}, { $inc: { count: 1 } }, { upsert: true, new: true });
+  logger.info(["Watch", `[${subtitleWatchTable.count}] id=${id}, season=${season}, episode=${episode}, filename=${filename}`]);
 
   try {
     const wizdomSubtitles = await fetchSubtitlesFromWizdom(id, season, episode);
