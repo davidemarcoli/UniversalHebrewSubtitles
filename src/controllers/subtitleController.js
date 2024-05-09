@@ -31,7 +31,7 @@ const getSubtitlesList = async (req, res) => {
   const [imdbID, season = 0, episode = 0] = extractCompoundID(compoundID);
   const filename = extractFilename(extraArgs);
 
-  if (contentType in ["series", "movie"]) pool.query(watchedContentQuery.insertWatch, [imdbID, season, episode]);
+  if (["series", "movie"].includes(contentType)) pool.query(watchedContentQuery.insertWatch, [imdbID, season, episode]);
 
   const wizdomSubtitles = await fetchSubtitlesFromWizdom(imdbID, season, episode);
   const stremioSubtitles = mapSubtitlesToStremioFormat(wizdomSubtitles);
