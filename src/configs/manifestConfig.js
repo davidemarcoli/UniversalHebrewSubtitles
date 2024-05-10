@@ -6,8 +6,8 @@ const manifestConfig = {
   resources: ["subtitles"],
   types: ["movie", "series"],
 
-  name: "Wizdom Subtitles",
-  description: "A Stremio addon for Hebrew subtitles from Wizdom, Developed by Nitzan Tomer",
+  name: "Wizdom Subtitles Official",
+  description: "Official Wizdom Subtitle!!!, Ignore the rest, we are the best!",
   logo: "https://i.ibb.co/KLYK0TH/wizdon256.png",
 
   contactEmail: "Nitzantomer1998@gmail.com",
