@@ -1,45 +1,51 @@
-import pool from "../configs/databaseConfig.js";
 import manifestConfig from "../configs/manifestConfig.js";
-import addonInstallsQuery from "../queries/addonInstallsQuery.js";
-import downloadedContentQuery from "../queries/downloadedContentQuery.js";
-import watchedContentQuery from "../queries/watchedContentQuery.js";
-import logger from "../utils/logger.js";
-import extractFilename from "../utils/filenameExtractor.js";
+import dbService from "../services/dbService.js";
+import loggerService from "../services/loggerService.js";
+import subtitleService from "../services/subtitleService.js";
 import extractCompoundID from "../utils/compoundIdExtractor.js";
-import { fetchSubtitlesFromWizdom, sortSubtitlesByFilename, mapSubtitlesToStremioFormat, extractSubtitleFromZipUrl } from "../services/subtitleService.js";
+import extractFilename from "../utils/filenameExtractor.js";
 
 
 const getManifest = async (req, res) => {
-  pool.query(addonInstallsQuery.insertInstall);
+  console.log(req.url);
+  loggerService.logInstall();
+  dbService.insertAddonInstall();
 
-  logger.info(["Install", `Addon Installed`]);
   res.send(manifestConfig);
 };
 
 const getSubtitleSrt = async (req, res) => {
   const { imdbID, season, episode, subtitleID } = req.params;
-  pool.query(downloadedContentQuery.insertDownload, [imdbID, season, episode]);
 
-  const srtContent = await extractSubtitleFromZipUrl(subtitleID);
+  loggerService.logDownload(subtitleID);
+  dbService.insertDownloadedContent(imdbID, season, episode);
 
-  logger.info(["Download", `subtitleID=${req.params.subtitleID}`]);
+  const srtContent = await subtitleService.extractSubtitleFromZipUrl(subtitleID);
+
   res.send(srtContent);
 };
 
 const getSubtitlesList = async (req, res) => {
+  console.log(req.url);
   const { contentType, compoundID, extraArgs } = req.params;
   const [imdbID, season = 0, episode = 0] = extractCompoundID(compoundID);
   const filename = extractFilename(extraArgs);
 
-  if (["series", "movie"].includes(contentType)) pool.query(watchedContentQuery.insertWatch, [imdbID, season, episode]);
+  loggerService.logWatch(imdbID, season, episode);
+  dbService.insertWatchedContent(imdbID, season, episode, contentType);
 
-  const wizdomSubtitles = await fetchSubtitlesFromWizdom(imdbID, season, episode);
-  const stremioSubtitles = mapSubtitlesToStremioFormat(wizdomSubtitles);
-  const sortedSubtitles = sortSubtitlesByFilename(stremioSubtitles, filename);
+  const wizdomSubtitles = await subtitleService.fetchSubtitlesFromWizdom(imdbID, season, episode);
+  const stremioSubtitles = subtitleService.mapSubtitlesToStremioFormat(wizdomSubtitles);
+  const sortedSubtitles = subtitleService.sortSubtitlesByFilename(stremioSubtitles, filename);
 
-  logger.info(["Watch", `imdbID=${imdbID}, season=${season}, episode=${episode}, filename=${filename}`]);
   res.send({ subtitles: sortedSubtitles });
 };
 
+const subtitleController = {
+  getManifest,
+  getSubtitleSrt,
+  getSubtitlesList,
+};
 
-export { getManifest, getSubtitleSrt, getSubtitlesList };
+
+export default subtitleController;
