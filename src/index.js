@@ -1,13 +1,10 @@
-import dotenv from "dotenv";
 import express from "express";
 
+import baseConfig from "./configs/baseConfig.js";
 import subtitleRoute from "./routes/subtitleRoute.js";
-import logger from "./utils/logger.js";
-
-
-dotenv.config();
+import loggerService from "./services/loggerService.js";
 
 
 const app = express();
 app.use("/", subtitleRoute);
-app.listen(process.env.PORT, () => { logger.info(["Express", "Express Connected"]); });
+app.listen(baseConfig.PORT, () => { loggerService.logExpress(); });
