@@ -46,5 +46,12 @@ const extractSubtitleFromZipUrl = async (subtitleID) => {
   return srtContent;
 };
 
+const subtitleService = {
+  fetchSubtitlesFromWizdom,
+  mapSubtitlesToStremioFormat,
+  sortSubtitlesByFilename,
+  extractSubtitleFromZipUrl,
+};
 
-export { fetchSubtitlesFromWizdom, mapSubtitlesToStremioFormat, sortSubtitlesByFilename, extractSubtitleFromZipUrl };
+
+export default subtitleService;
