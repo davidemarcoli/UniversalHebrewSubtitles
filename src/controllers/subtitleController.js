@@ -7,7 +7,6 @@ import extractFilename from "../utils/filenameExtractor.js";
 
 
 const getManifest = async (req, res) => {
-  console.log(req.url);
   loggerService.logInstall();
   dbService.insertAddonInstall();
 
@@ -26,13 +25,12 @@ const getSubtitleSrt = async (req, res) => {
 };
 
 const getSubtitlesList = async (req, res) => {
-  console.log(req.url);
   const { contentType, compoundID, extraArgs } = req.params;
   const [imdbID, season = 0, episode = 0] = extractCompoundID(compoundID);
   const filename = extractFilename(extraArgs);
 
   loggerService.logWatch(imdbID, season, episode);
-  dbService.insertWatchedContent(imdbID, season, episode, contentType);
+  dbService.insertWatchedContent(contentType, imdbID, season, episode);
 
   const wizdomSubtitles = await subtitleService.fetchSubtitlesFromWizdom(imdbID, season, episode);
   const stremioSubtitles = subtitleService.mapSubtitlesToStremioFormat(wizdomSubtitles);
