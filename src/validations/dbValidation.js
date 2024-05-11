@@ -1,7 +1,7 @@
 const contentTypeCheck = (contentType) => { return ["series", "movie"].includes(contentType); };
 const imdbIDCheck = (imdbID) => { return /^tt\d+$/.test(imdbID); };
-const seasonCheck = (season) => { return Number.isInteger(season); };
-const episodeCheck = (episode) => { return Number.isInteger(episode); };
+const seasonCheck = (season) => { return /^\d+$/.test(season); };
+const episodeCheck = (episode) => { return /^\d+$/.test(episode); };
 
 const downloadedContent = (imdbID, season, episode) => {
     if (imdbIDCheck(imdbID) === false) return false;
@@ -24,6 +24,5 @@ const dbValidation = {
     downloadedContent,
     watchedContent,
 };
-
 
 export default dbValidation;
