@@ -12,7 +12,6 @@ const fetchSubtitlesFromWizdom = async (imdbID, season, episode) => {
   const wizdomSubtitles = response.body;
 
   wizdomSubtitles.forEach((s) => {
-    s.id = s.id;
     s.name = s.versioname;
 
     s.imdbID = imdbID;
