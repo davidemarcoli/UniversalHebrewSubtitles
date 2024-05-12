@@ -1,6 +1,6 @@
 const extractCompoundID = (compoundID) => {
-    const [id, season, episode] = compoundID.split(":");
-    
+    const [id, season = 0, episode = 0] = compoundID.split(":");
+
     return [id, season, episode];
 };
 
