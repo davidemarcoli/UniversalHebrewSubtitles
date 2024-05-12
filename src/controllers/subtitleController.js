@@ -2,8 +2,7 @@ import manifestConfig from "../configs/manifestConfig.js";
 import dbService from "../services/dbService.js";
 import loggerService from "../services/loggerService.js";
 import subtitleService from "../services/subtitleService.js";
-import extractCompoundID from "../utils/compoundIdExtractor.js";
-import extractFilename from "../utils/filenameExtractor.js";
+import extractData from "../utils/dataExtractor.js";
 
 
 const getManifest = async (req, res) => {
@@ -20,17 +19,15 @@ const getSubtitleSrt = async (req, res) => {
   dbService.insertDownloadedContent(imdbID, season, episode);
 
   const srtContent = await subtitleService.extractSubtitleFromZipUrl(subtitleID);
-
+  
   res.send(srtContent);
 };
 
 const getSubtitlesList = async (req, res) => {
-  const { contentType, compoundID, extraArgs } = req.params;
-  const [imdbID, season = 0, episode = 0] = extractCompoundID(compoundID);
-  const filename = extractFilename(extraArgs);
+  const { imdbID, season, episode, filename } = extractData(req.params);
 
   loggerService.logWatch(imdbID, season, episode);
-  dbService.insertWatchedContent(contentType, imdbID, season, episode);
+  dbService.insertWatchedContent(imdbID, season, episode);
 
   const wizdomSubtitles = await subtitleService.fetchSubtitlesFromWizdom(imdbID, season, episode);
   const stremioSubtitles = subtitleService.mapSubtitlesToStremioFormat(wizdomSubtitles);
