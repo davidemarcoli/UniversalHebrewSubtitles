@@ -9,7 +9,7 @@ const extractData = (params) => {
     const filename = extractFilename(extraArgs);
 
     const valid = dataValidation(contentType, imdbID, season, episode);
-    if (valid === false) throw new Error("Invalid data");
+    if (valid === false) throw new Error(`Invalid Data: ContentType=${contentType}, imdbID=${imdbID}, season=${season}, episode=${episode}`);
 
     return { imdbID, season, episode, filename };
 };
