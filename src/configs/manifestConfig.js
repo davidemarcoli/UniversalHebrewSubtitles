@@ -1,13 +1,13 @@
 const manifestConfig = {
-  id: "wizdom",
-  version: "3.0.2",
+  id: "universal-hebrew-subtitles",
+  version: "3.0.3",
 
   catalogs: [],
   resources: ["subtitles"],
   types: ["movie", "series"],
 
-  name: "Wizdom Subtitles",
-  description: "Stremio addon for Hebrew subtitles from Wizdom, Developed by Nitzan Tomer",
+  name: "Universal Hebrew Subtitles",
+  description: "Your one-stop destination for all Hebrew subtitles, Developed by Nitzan Tomer",
   logo: "https://i.ibb.co/KLYK0TH/wizdon256.png",
 
   contactEmail: "Nitzantomer1998@gmail.com",

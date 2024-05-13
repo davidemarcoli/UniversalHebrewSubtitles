@@ -1,7 +1,7 @@
 {
-  "name": "stremio-wizdom-addon",
-  "version": "3.0.2",
-  "description": "A Stremio addon for Hebrew subtitles from Wizdom, Developed by Nitzan Tomer",
+  "name": "universal-hebrew-subtitles",
+  "version": "3.0.3",
+  "description": "Your one-stop destination for all Hebrew subtitles, Developed by Nitzan Tomer",
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
