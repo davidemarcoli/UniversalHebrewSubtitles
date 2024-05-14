@@ -6,6 +6,7 @@ import wrapTryCatch from "../utils/wrapTryCatch.js";
 
 
 const router = express.Router();
+router.get("/icon.svg", subtitleController.getIcon);
 router.get("/manifest.json", corsMiddleware, wrapTryCatch(subtitleController.getManifest));
 router.get("/:imdbID/:season/:episode/:subtitleID.srt", wrapTryCatch(subtitleController.getSubtitleSrt));
 router.get("/subtitles/:contentType/:compoundID/:extraArgs.json", corsMiddleware, wrapTryCatch(subtitleController.getSubtitlesList));

@@ -5,6 +5,8 @@ import subtitleService from "../services/subtitleService.js";
 import extractData from "../utils/dataExtractor.js";
 
 
+const getIcon = (req, res) => { res.sendFile("icon.svg", { root: "./public/icon" }); };
+
 const getManifest = async (req, res) => {
   loggerService.logInstall();
   dbService.insertAddonInstall();
@@ -19,7 +21,7 @@ const getSubtitleSrt = async (req, res) => {
   dbService.insertDownloadedContent(imdbID, season, episode);
 
   const srtContent = await subtitleService.extractSubtitleFromZipUrl(subtitleID);
-  
+
   res.send(srtContent);
 };
 
@@ -36,7 +38,9 @@ const getSubtitlesList = async (req, res) => {
   res.send({ subtitles: sortedSubtitles });
 };
 
+
 const subtitleController = {
+  getIcon,
   getManifest,
   getSubtitleSrt,
   getSubtitlesList,
