@@ -2,6 +2,3 @@
 
 
 GET http://{{host}}/manifest.json
-
-
-# Note: All possible errors in this route have been mitigated.
