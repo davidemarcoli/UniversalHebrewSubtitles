@@ -15,12 +15,12 @@ const getManifest = async (req, res) => {
 };
 
 const getSubtitleSrt = async (req, res) => {
-  const { source, imdbID, season, episode, subtitleID } = req.params;
+  const { provider, imdbID, season, episode, subtitleID } = req.params;
 
   loggerService.logDownload(subtitleID);
-  dbService.insertDownloadedContent(source, imdbID, season, episode);
+  dbService.insertDownloadedContent(provider, imdbID, season, episode);
 
-  const srtContent = await stremioService.getSubtitleSrt(source, subtitleID);
+  const srtContent = await stremioService.getSubtitleSrt(provider, subtitleID);
 
   res.send(srtContent);
 };

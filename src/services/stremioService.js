@@ -3,10 +3,10 @@ import levenshtein from "fastest-levenshtein";
 import wizdomController from "../controllers/wizdomController.js";
 
 
-const getSubtitleSrt = async (source, subtitleID) => {
+const getSubtitleSrt = async (provider, subtitleID) => {
   let srtContent;
 
-  if (source === "wizdom") srtContent = await wizdomController.getSubtitleSrt(subtitleID);
+  if (provider === "wizdom") srtContent = await wizdomController.getSubtitleSrt(subtitleID);
 
   return srtContent;
 };
