@@ -7,6 +7,3 @@
 
 
 GET http://{{host}}/subtitles/{{contentType}}/{{imdbID}}:{{season}}:{{episode}}/{{extraArgs}}.json
-
-
-# Note: All possible errors in this route have been mitigated.

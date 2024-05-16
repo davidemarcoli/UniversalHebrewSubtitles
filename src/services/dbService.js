@@ -5,7 +5,7 @@ import watchedContentQuery from "../queries/watchedContentQuery.js";
 
 
 const insertAddonInstall = async () => { db.query(addonInstallsQuery.insertInstall); };
-const insertDownloadedContent = async (imdbID, season, episode) => { db.query(downloadedContentQuery.insertDownload, [imdbID, season, episode]); };
+const insertDownloadedContent = async (provider, imdbID, season, episode) => { db.query(downloadedContentQuery.insertDownload, [provider, imdbID, season, episode]); };
 const insertWatchedContent = async (imdbID, season, episode) => { db.query(watchedContentQuery.insertWatch, [imdbID, season, episode]); };
 
 const dbService = {

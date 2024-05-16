@@ -1,7 +1,7 @@
 import manifestConfig from "../configs/manifestConfig.js";
 import dbService from "../services/dbService.js";
 import loggerService from "../services/loggerService.js";
-import subtitleService from "../services/subtitleService.js";
+import stremioService from "../services/stremioService.js";
 import extractData from "../utils/dataExtractor.js";
 
 
@@ -15,12 +15,12 @@ const getManifest = async (req, res) => {
 };
 
 const getSubtitleSrt = async (req, res) => {
-  const { imdbID, season, episode, subtitleID } = req.params;
+  const { provider, imdbID, season, episode, subtitleID } = req.params;
 
   loggerService.logDownload(subtitleID);
-  dbService.insertDownloadedContent(imdbID, season, episode);
+  dbService.insertDownloadedContent(provider, imdbID, season, episode);
 
-  const srtContent = await subtitleService.extractSubtitleFromZipUrl(subtitleID);
+  const srtContent = await stremioService.getSubtitleSrt(provider, subtitleID);
 
   res.send(srtContent);
 };
@@ -31,15 +31,13 @@ const getSubtitlesList = async (req, res) => {
   loggerService.logWatch(imdbID, season, episode);
   dbService.insertWatchedContent(imdbID, season, episode);
 
-  const wizdomSubtitles = await subtitleService.fetchSubtitlesFromWizdom(imdbID, season, episode);
-  const stremioSubtitles = subtitleService.mapSubtitlesToStremioFormat(wizdomSubtitles);
-  const sortedSubtitles = subtitleService.sortSubtitlesByFilename(stremioSubtitles, filename);
+  const stremioSubtitles = await stremioService.getSubtitlesList(imdbID, season, episode);
+  const sortedSubtitles = stremioService.sortSubtitlesByFilename(stremioSubtitles, filename);
 
   res.send({ subtitles: sortedSubtitles });
 };
 
-
-const subtitleController = {
+const stremioController = {
   getIcon,
   getManifest,
   getSubtitleSrt,
@@ -47,4 +45,4 @@ const subtitleController = {
 };
 
 
-export default subtitleController;
+export default stremioController;

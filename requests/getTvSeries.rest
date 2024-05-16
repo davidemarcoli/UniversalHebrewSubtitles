@@ -1,12 +1,9 @@
 @host=localhost:7000
 @contentType=series
 @imdbID=tt0417299
-@season=-1
+@season=1
 @episode=1
 @extraArgs=videoHash=9b31ff0aaa1cdea6&videoSize=264878942&filename=Avatar - The Last Airbender - S03E01 - The Awakening.mkv
 
 
 GET http://{{host}}/subtitles/{{contentType}}/{{imdbID}}:{{season}}:{{episode}}/{{extraArgs}}.json
-
-
-# Note: All possible errors in this route have been mitigated.

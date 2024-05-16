@@ -1,11 +1,8 @@
 @host=localhost:7000
 @imdbID=tt0417299
-@season=3
+@season=1
 @episode=1
-@subtitleID=275026
+@subtitleID=274986
 
 
-GET http://{{host}}/{{imdbID}}/{{season}}/{{episode}}/{{subtitleID}}.srt
-
-
-# Note: All possible errors in this route have been mitigated.
+GET http://{{host}}/subtitles/wizdom/{{imdbID}}/{{season}}/{{episode}}/{{subtitleID}}.srt
