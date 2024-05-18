@@ -5,7 +5,11 @@ import stremioService from "../services/stremioService.js";
 import extractData from "../utils/dataExtractor.js";
 
 
-const getIcon = (req, res) => { res.sendFile("icon.svg", { root: "./public/icon" }); };
+const getConfigPage = (req, res) => { res.sendFile("index.html", { root: "./public" }); };
+
+const getStaticFile = (req, res) => {
+  return res.sendFile(req.params.path, { root: "./public" });
+};
 
 const getManifest = async (req, res) => {
   loggerService.logInstall();
@@ -15,7 +19,8 @@ const getManifest = async (req, res) => {
 };
 
 const getSubtitleSrt = async (req, res) => {
-  const { provider, imdbID, season, episode, subtitleID } = req.params;
+  const { provider, imdbID, season, episode, subtitleID, configString } = req.params;
+  console.log(atob(configString))
 
   loggerService.logDownload(subtitleID);
   dbService.insertDownloadedContent(provider, imdbID, season, episode);
@@ -26,7 +31,8 @@ const getSubtitleSrt = async (req, res) => {
 };
 
 const getSubtitlesList = async (req, res) => {
-  const { imdbID, season, episode, filename } = extractData(req.params);
+  const { imdbID, season, episode, filename, configString } = extractData(req.params);
+  console.log(atob(configString))
 
   loggerService.logWatch(imdbID, season, episode);
   dbService.insertWatchedContent(imdbID, season, episode);
@@ -38,7 +44,8 @@ const getSubtitlesList = async (req, res) => {
 };
 
 const stremioController = {
-  getIcon,
+  getConfigPage,
+  getStaticFile,
   getManifest,
   getSubtitleSrt,
   getSubtitlesList,

@@ -11,9 +11,13 @@ const manifestConfig = {
 
   name: "Universal Hebrew Subtitles",
   description: "Enjoy Hebrew subtitles from all the top notch websites in one convenient location.",
-  logo: `${baseConfig.BASE_URL}/icon.svg`,
+  logo: `${baseConfig.BASE_URL}/static/icon/icon.svg`,
 
   contactEmail: "Nitzantomer1998@gmail.com",
+
+  behaviorHints: {
+    configurable: true
+  },
 };
 
 
